@@ -13,7 +13,7 @@ obj/
 *.user
 *.unityproj
 *.booproj
-
+*.vs/
 .DS_Store
 ._DS_Store?
 ._*

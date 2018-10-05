@@ -15,11 +15,11 @@ TagManager:
   - 
   - Wall
   - Player
-  - Diversion
+  - 
   - Waypoint
-  - 
-  - 
-  - 
+  - LightObstacles
+  - LightSources
+  - AmbientLight
   - 
   - 
   - 

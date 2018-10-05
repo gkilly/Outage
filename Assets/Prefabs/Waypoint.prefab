@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4065355006889618}
-  - component: {fileID: 65054311794316210}
+  - component: {fileID: 58970520644046730}
   m_Layer: 11
   m_Name: Waypoint
   m_TagString: Untagged
@@ -34,21 +34,24 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1283104408551208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.89, y: 0.91, z: 0.0012540137}
+  m_LocalPosition: {x: 0.09, y: 6.83, z: -0.03710938}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &65054311794316210
-BoxCollider:
+--- !u!58 &58970520644046730
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1283104408551208}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.00000011920929, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.41314435, y: 0.36967427, z: 1}
-  m_Center: {x: 0, y: 0.010867864, z: 0}
+  m_Radius: 0.26424575
