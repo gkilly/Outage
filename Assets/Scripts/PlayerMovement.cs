@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour {
     private int currDirection;
     public Transform[] waypointChoices = new Transform[4];
     private Vector3 nextMove;
+    public LayerMask lm;
 
     public bool movement = false;
     private Rigidbody2D theRigidbody;
@@ -29,10 +30,69 @@ public class PlayerMovement : MonoBehaviour {
         upWaypointCollider = GameObject.Find("upCollider");
         downWaypointCollider = GameObject.Find("downCollider");
 
-       // currWaypoint =
-        waypointChoices[2] = GameObject.Find("SecondWaypoint").transform;
-        lastDirection = -1;
-        currDirection = 2;
+        // currWaypoint =
+        // waypointChoices[2] = GameObject.Find("SecondWaypoint").transform;
+        // lastDirection = -1;
+        // currDirection = 2;
+
+        RaycastHit2D downRay = Physics2D.Raycast(downWaypointCollider.transform.position, Vector2.down, Mathf.Infinity, lm);
+        RaycastHit2D upRay = Physics2D.Raycast(upWaypointCollider.transform.position, Vector2.up, Mathf.Infinity, lm);
+        RaycastHit2D leftRay = Physics2D.Raycast(leftWaypointCollider.transform.position, Vector2.left, lm);
+        RaycastHit2D rightRay = Physics2D.Raycast(rightWaypointCollider.transform.position, Vector2.right, lm);
+        if (upRay.collider == true)
+        {
+            if (upRay.collider.gameObject.layer == LayerMask.NameToLayer("Waypoint"))
+            {
+                print("up: " + upRay.collider.name);
+                waypointChoices[0] = upRay.collider.transform;
+            }
+            else
+                waypointChoices[0] = null;
+        }
+        else
+            waypointChoices[3] = null;
+
+        if (rightRay.collider == true)
+        {
+            if (rightRay.collider.gameObject.layer == LayerMask.NameToLayer("Waypoint"))
+            {
+                print("right: " + rightRay.collider.name);
+                waypointChoices[1] = rightRay.collider.transform;
+            }
+            else
+                waypointChoices[1] = null;
+        }
+        else
+            waypointChoices[1] = null;
+
+        if (downRay.collider == true)
+        {
+            print("Wall" + downRay.collider.name);
+            if (downRay.collider.gameObject.layer == LayerMask.NameToLayer("Waypoint"))
+            {
+                print("down: " + downRay.collider.name);
+                waypointChoices[2] = downRay.collider.transform;
+            }
+            else
+                waypointChoices[2] = null;
+        }
+        else
+            waypointChoices[2] = null;
+
+        if (leftRay.collider == true)
+        {
+            if (leftRay.collider.gameObject.layer == LayerMask.NameToLayer("Waypoint"))
+            {
+                print("left: " + leftRay.collider.name);
+                waypointChoices[3] = leftRay.collider.transform;
+            }
+            else
+            {
+                waypointChoices[3] = null;
+            }
+        }
+        else
+            waypointChoices[3] = null;
     }
     // Update is called once per frame
     void Update () {
@@ -43,16 +103,15 @@ public class PlayerMovement : MonoBehaviour {
             nextMove = (currWaypoint.position - transform.position).normalized;
             theRigidbody.velocity = new Vector2(nextMove.x * speed, nextMove.y * speed);
 
-
             if (currentDistanceToWaypoint < 0.1)
             {
                 movement = false;
                 print("wtf");
                 theRigidbody.velocity = Vector2.zero;
-                RaycastHit2D downRay = Physics2D.Raycast(downWaypointCollider.transform.position, Vector2.down, Mathf.Infinity);
-                RaycastHit2D upRay = Physics2D.Raycast(upWaypointCollider.transform.position, Vector2.up, Mathf.Infinity);
-                RaycastHit2D leftRay = Physics2D.Raycast(leftWaypointCollider.transform.position, Vector2.left, Mathf.Infinity);
-                RaycastHit2D rightRay = Physics2D.Raycast(rightWaypointCollider.transform.position, Vector2.right, Mathf.Infinity);
+                RaycastHit2D downRay = Physics2D.Raycast(downWaypointCollider.transform.position, Vector2.down, lm);
+                RaycastHit2D upRay = Physics2D.Raycast(upWaypointCollider.transform.position, Vector2.up, lm);
+                RaycastHit2D leftRay = Physics2D.Raycast(leftWaypointCollider.transform.position, Vector2.left, lm);
+                RaycastHit2D rightRay = Physics2D.Raycast(rightWaypointCollider.transform.position, Vector2.right, lm);
 
                 if (upRay.collider == true)
                 {
@@ -110,7 +169,6 @@ public class PlayerMovement : MonoBehaviour {
                 else
                     waypointChoices[3] = null;
             }
-
             GetComponent<Animator>().SetBool("isMoving", movement);
             GetComponent<Animator>().SetInteger("direction", currDirection);
 
@@ -154,7 +212,7 @@ public class PlayerMovement : MonoBehaviour {
                 lastWaypoint = currWaypoint;
                 currWaypoint = waypointChoices[1];
                 lastDirection = currDirection;
-                currDirection = 1;
+                currDirection = 3;
             }
             else if(inputX < 0 && waypointChoices[3] != null)
             {
@@ -162,7 +220,7 @@ public class PlayerMovement : MonoBehaviour {
                 lastWaypoint = currWaypoint;
                 currWaypoint = waypointChoices[3];
                 lastDirection = currDirection;
-                currDirection = 3;
+                currDirection = 1;
             }
         }
 
